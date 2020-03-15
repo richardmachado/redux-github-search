@@ -3,10 +3,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { getRepos } from './redux';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import './App.css'
+
+import { 
+  Header,
+  RepoList
+} 
+from './styles'
 
 // App.js
 export class App extends Component {
-  state = { username: 'richardmachado' };
+  state = { username: 'richardmachado'
+  // ,
+  // value: '',
+  // copied: false,
+ };
+
+ 
 
   componentDidMount() {
     this.updateRepoList(this.state.username);
@@ -16,8 +30,8 @@ export class App extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Github repos </h1>
+      <div className = "App" >
+        <Header>Github repos </Header>
         <strong>Github username: </strong>
         <input
           type="text"
@@ -30,11 +44,32 @@ export class App extends Component {
         </button>
         <ul>
           {this.props.repos.map((repo, index) => (
-            <li key={index}>
+
+            <RepoList key={index}>
               <a href={repo.html_url} >
-                {repo.name}
+                {repo.name} <br></br>
+                {repo.description}<br></br>
+
+                Clone this: {repo.clone_url}
+                
+                  {/* <div>
+        <input value={this.state.value}
+          onChange={({target: {value}}) => this.setState({value, copied: false})} />
+ 
+        <CopyToClipboard text={this.state.value}
+          onCopy={() => this.setState({copied: true})}>
+          <span>Copy to clipboard with span</span>
+        </CopyToClipboard>
+ 
+        <CopyToClipboard text={this.state.value}
+          onCopy={() => this.setState({copied: true})}>
+          <button>Copy to clipboard with button</button>
+        </CopyToClipboard>
+ 
+        {this.state.copied ? <span style={{color: 'red'}}>Copied.</span> : null}
+      </div> */}
               </a>
-            </li>
+            </RepoList>
           ))}
         </ul>
       </div>
